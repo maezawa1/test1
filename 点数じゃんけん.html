@@ -1,0 +1,119 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>じゃんけんゲーム</title>
+</head>
+
+<body>
+
+<div id="message0" style="position:absolute; left:10px; top:10px">
+<font size="+1">点数じゃんけん</font>
+</div>
+
+<div id="message1" style="position:absolute; left:10px; top:40px">
+あいての選択は ？
+</div>
+
+<div id="message2" style="position:absolute; left:10px; top:70px">
+勝敗の結果は ？
+</div>
+
+<div id="message3" style="position:absolute; left:10px; top:150px">
+あなたの点数は ？
+</div>
+
+<div id="message4" style="position:absolute; left:10px; top:180px">
+あいての点数は ？
+</div>
+
+<div id="message5" style="position:absolute; left:10px; top:210px">
+ルール解説 <br>
+これは普通のジャンケンとほぼ同じですが、以下のように勝利した指に点数を付けます。<br>
+1.パーで勝利する・・・点数3点貰える<br>
+2.グーで勝利する・・・点数2点貰える<br>
+3.チョキで勝利する・・・点数1点貰える<br>
+そして、複数回遊び、最終的な得点数によって勝ち負けを判断します。
+</div>
+
+
+<form style="position:absolute; left:10px; top:100px">
+あなたの選択は　
+<select id="mySelect">
+<option>グー</option>
+<option>チョキ</option>
+<option>パー</option>
+</select>
+<input type="button" value="決定" onclick="myGame()">
+<input type="button" value="点数クリア" onclick="myGameClear()">
+</form>
+
+<script type="text/javascript">
+<!--
+
+var score = 0;
+var score2 = 0;
+
+function myGame(){
+
+myNumber = document.getElementById("mySelect").selectedIndex;
+hisNumber = Math.floor(Math.random()*3);
+
+if( hisNumber == 0 ){
+hisHand = "グー";
+}
+if( hisNumber == 1 ){
+hisHand = "チョキ";
+}
+if( hisNumber == 2 ){
+hisHand = "パー";
+}
+
+if( myNumber - hisNumber == -2 ){
+judge = "あなたの 負け";
+if( hisNumber == 0 ) score2 += 2;
+if( hisNumber == 1 ) score2 += 1;
+if( hisNumber == 2 ) score2 += 3;
+}
+if( myNumber - hisNumber == -1 ){
+judge = "あなたの 勝ち";
+if( myNumber == 0 ) score += 2;
+if( myNumber == 1 ) score += 1;
+if( myNumber == 2 ) score += 3;
+
+}
+if( myNumber - hisNumber == 0 ){
+judge = "両者の 引き分け";
+}
+if( myNumber - hisNumber == 1 ){
+judge = "あなたの 負け";
+if( hisNumber == 0 ) score2 += 2;
+if( hisNumber == 1 ) score2 += 1;
+if( hisNumber == 2 ) score2 += 3;
+}
+if( myNumber - hisNumber == 2 ){
+judge = "あなたの 勝ち";
+if( myNumber == 0 ) score += 2;
+if( myNumber == 1 ) score += 1;
+if( myNumber == 2 ) score += 3;
+}
+
+document.getElementById("message1").innerHTML = "あいての選択は "+hisHand;
+document.getElementById("message2").innerHTML = "勝敗の結果は "+judge;
+document.getElementById("message3").innerHTML = "あなたの点数は "+score;
+document.getElementById("message4").innerHTML = "あいての点数は "+score2;
+
+}
+function myGameClear(){
+score = 0;
+score2 = 0;
+document.getElementById("message3").innerHTML = "あなたの点数は "+score;
+document.getElementById("message4").innerHTML = "あいての点数は "+score2;
+}
+//-->
+</script>
+
+</body>
+
+</html>
